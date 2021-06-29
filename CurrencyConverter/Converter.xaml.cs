@@ -87,7 +87,7 @@ namespace CurrencyConverter
                 ValuteB.Text = B.CharCode;
                 coef = A.Value / B.Value;
             });
-            rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.GetCurrenciesNames(), _backAction));
+            rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.GetCurrenciesNames(), _backAction, A.CharCode, B.CharCode));
         }
     }
 }

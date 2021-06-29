@@ -24,16 +24,22 @@ namespace CurrencyConverter
     public sealed partial class CurrencyChangeWindow : Page
     {
         Action<(string A, string B)> action;
+        string A, B;
         public CurrencyChangeWindow()
         {
             this.InitializeComponent();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            IEnumerable<string> list = (((IEnumerable<string>, Action<(string A, string B)>)) e.Parameter).Item1;
+            IEnumerable<string> list = (((IEnumerable<string>, Action<(string A, string B)>, string, string)) e.Parameter).Item1;
             listA.ItemsSource = list;
             listB.ItemsSource = list;
-            action = (((IEnumerable<string>, Action<(string A, string B)>))e.Parameter).Item2;
+            action = (((IEnumerable<string>, Action<(string A, string B)>, string, string))e.Parameter).Item2;
+            A = (((IEnumerable<string>, Action<(string A, string B)>, string, string))e.Parameter).Item3;
+            B = (((IEnumerable<string>, Action<(string A, string B)>, string, string))e.Parameter).Item4;
+            int y = list.ToList().IndexOf(A);
+            listA.SelectedIndex = list.ToList().IndexOf(A);
+            listB.SelectedIndex = list.ToList().IndexOf(B);
             return;
         }
 

@@ -29,10 +29,9 @@ namespace CurrencyConverter
         public MainPage()
         {
             this.InitializeComponent();
-            var r = CBRFinanceSource.GetInstance().DoRequestWintHandle();
-            //Table.ItemsSource = r.Valute;
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            converter2.SetParams(r);
+            var r = CBRFinanceSource.GetInstance().DoRequestWintHandle();
+            converter.SetParams(r);
         }
     }
 }

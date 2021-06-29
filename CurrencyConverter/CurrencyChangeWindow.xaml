@@ -7,14 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Custom:DockPanel>
-        <StackPanel Custom:DockPanel.Dock="Left" >
-            <ListBox Name="listA" Width="200"/>
-        </StackPanel>
-        <StackPanel Custom:DockPanel.Dock="Right" >
-            <ListBox Name="listB" Width="200"/>
+    <StackPanel>
+        <Custom:DockPanel>
+            <ScrollViewer>
 
-        </StackPanel>
-        <Button Content="Click" Click="Button_Click"></Button>
-    </Custom:DockPanel>
+                    <ListBox Name="listA" Width="200" Custom:DockPanel.Dock="Left" Height="300"/>
+
+            </ScrollViewer>
+            <ScrollViewer >
+
+                <ListBox Name="listB" Width="200" Custom:DockPanel.Dock="Right" Height="300"/>
+
+            </ScrollViewer>
+
+        </Custom:DockPanel>
+        <Button Content="Click" Click="Button_Click" Custom:DockPanel.Dock="Bottom" ></Button>
+    </StackPanel>
 </Page>
