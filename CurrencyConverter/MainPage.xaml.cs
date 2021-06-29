@@ -30,7 +30,7 @@ namespace CurrencyConverter
         {
             this.InitializeComponent();
             var r = CBRFinanceSource.GetInstance().DoRequestWintHandle();
-            grid.ItemsSource = r.Valute;
+            Table.ItemsSource = r.Valute;
         }
     }
 }

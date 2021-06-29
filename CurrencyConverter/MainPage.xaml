@@ -10,23 +10,14 @@
 
     <RelativePanel>
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-            <controls:DockPanel>
-                <TextBox Height="auto" Margin="10,0,10,0" Width="150" controls:DockPanel.Dock="Left"/>
-                <TextBox Height="auto" Margin="10,0,10,0" Width="150" controls:DockPanel.Dock="Right"/>
-                <Button Content="Swap"/>
-            </controls:DockPanel>
-            <StackPanel Height="100" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Button" controls:DockPanel.Dock="Bottom"/>
-            </StackPanel>
-        </StackPanel>
+        <local:Converter/>
         <StackPanel RelativePanel.AlignRightWithPanel="True">
             <StackPanel Orientation="Horizontal">
                 <RadioButton></RadioButton>
                 <RadioButton></RadioButton>
                 <RadioButton></RadioButton>
             </StackPanel>
-            <controls:DataGrid Name="grid" HeadersVisibility="Column"  CanUserSortColumns="False" 
+            <controls:DataGrid Name="Table" HeadersVisibility="Column"  CanUserSortColumns="False" 
                       CanUserResizeColumns="False" AutoGenerateColumns="False" 
                       CanUserReorderColumns="False"  Width="auto" >
 
