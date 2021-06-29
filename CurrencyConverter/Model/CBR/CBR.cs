@@ -39,15 +39,25 @@ namespace CurrencyConverter.Model.CBR
         public string Timestamp { get; set; }
         public string PreviousDate { get; set; }
         public string PreviousURL { get; set; }
-        
+        public CBRXmlDailyResponse()
+        {
+            Valute = new SortedDictionary<string, Currency>();
+            Currency rub = new Currency();
+            rub.Value = 1;
+            rub.CharCode = "RUB";
+            rub.Nominal = 1;
+            Valute.Add("RUB", rub);
+        }
         public SortedDictionary<string, Currency> Valute { get; set; }
 
         public IEnumerable<string> GetCurrenciesNames() => Valute.Keys;
         public IEnumerable<Currency> GetCurrencies() => Valute.Values;
 
-        public static CBRXmlDailyResponse LoadFromText(string response)
-        {            
-            return JsonConvert.DeserializeObject<CBRXmlDailyResponse>(response);
+        public static CBRXmlDailyResponse LoadFromText(string response) => JsonConvert.DeserializeObject<CBRXmlDailyResponse>(response);
+
+        public (Currency, Currency) GetInitPair()
+        {
+            return (Valute["RUB"], Valute["USD"]);
         }
     }
 }

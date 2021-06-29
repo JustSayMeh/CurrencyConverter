@@ -10,8 +10,8 @@
 
     <RelativePanel>
 
-        <local:Converter/>
-        <StackPanel RelativePanel.AlignRightWithPanel="True">
+        <local:Converter x:Name="converter2"/>
+        <!--<StackPanel RelativePanel.AlignRightWithPanel="True">
             <StackPanel Orientation="Horizontal">
                 <RadioButton></RadioButton>
                 <RadioButton></RadioButton>
@@ -59,6 +59,6 @@
 
 
             </controls:DataGrid>
-        </StackPanel>
+        </StackPanel>-->
     </RelativePanel>
 </Page>

@@ -122,10 +122,13 @@
     <Compile Include="Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CurrencyChangeWindow.xaml.cs">
+      <DependentUpon>CurrencyChangeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\CBR\Currency.cs" />
+    <Compile Include="Model\CBR\CBR.cs" />
     <Compile Include="Model\ResponseParser.cs" />
     <Compile Include="Model\ResultHandler.cs" />
     <Compile Include="Network\BurseRequest.cs" />
@@ -153,6 +156,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Converter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CurrencyChangeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

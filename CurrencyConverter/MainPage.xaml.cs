@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
+using CurrencyConverter;
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
 namespace CurrencyConverter
@@ -30,7 +30,9 @@ namespace CurrencyConverter
         {
             this.InitializeComponent();
             var r = CBRFinanceSource.GetInstance().DoRequestWintHandle();
-            Table.ItemsSource = r.Valute;
+            //Table.ItemsSource = r.Valute;
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            converter2.SetParams(r);
         }
     }
 }

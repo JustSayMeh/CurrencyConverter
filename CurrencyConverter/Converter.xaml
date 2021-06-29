@@ -8,14 +8,22 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Visibility="Collapsed" x:Name="ConverterMain">
         <controls:DockPanel>
-            <TextBox Name="ValueA" Height="auto" Margin="10,0,10,0" Width="150" controls:DockPanel.Dock="Left"/>
-            <TextBox Name="ValueB" Height="auto" Margin="10,0,10,0" Width="150" controls:DockPanel.Dock="Right"/>
-            <Button Content="Swap"/>
+            <StackPanel Margin="10,0,10,0">
+                <TextBox Name="ValueA" Height="auto"  Width="150" controls:DockPanel.Dock="Left" TextChanged="ValueA_TextChanged" BeforeTextChanging="Value_BeforeTextChanging" />
+                <TextBlock Name="ValuteA">RUB</TextBlock>
+            </StackPanel>
+            <StackPanel  Margin="10,0,10,0" >
+                <TextBox Name="ValueB" Height="auto" Width="150" controls:DockPanel.Dock="Right"  TextChanged="ValueB_TextChanged" BeforeTextChanging="Value_BeforeTextChanging"/>
+                <TextBlock Name="ValuteB">USD</TextBlock>
+            </StackPanel>
+            
+            
+        
         </controls:DockPanel>
         <StackPanel Name="ConvertButton" Height="auto" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Button" controls:DockPanel.Dock="Bottom"/>
+            <Button Content="Change" controls:DockPanel.Dock="Bottom" Click="ChangeButton_Click"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

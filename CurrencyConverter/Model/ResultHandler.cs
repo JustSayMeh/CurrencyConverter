@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CurrencyConverter.Model
 {
-    class Currency
+    public class Currency
     {
         public string Name { get; set; }
         public string ID { get; set; }
@@ -18,11 +18,12 @@ namespace CurrencyConverter.Model
         public double Previous { get; set; }
     }
 
-    interface IFinanceExchange
+    public interface IFinanceExchange
     {
         SortedDictionary<string, Currency> Valute { get;}
         IEnumerable<string> GetCurrenciesNames();
         IEnumerable<Currency> GetCurrencies();
+        (Currency, Currency) GetInitPair();
     }
 
     abstract class FinanceSource
