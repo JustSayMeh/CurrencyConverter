@@ -50,6 +50,7 @@ namespace CurrencyConverter
     }
     public sealed partial class Converter : UserControl
     {
+        private string change_valutes_string = (string)Application.Current.Resources["change_valutes_string"];
         private char culture_separator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator.ToCharArray()[0];
         private IFinanceExchange financeExchange;
         private ConverterCalculator converterCalculator = null;
@@ -129,6 +130,7 @@ namespace CurrencyConverter
                 ValueA.IsEnabled = true;
                 ValueB.IsEnabled = true;
                 converterCalculator = new ConverterCalculator(A, B);
+                button.Content = change_valutes_string;
                 if (ValueA.Text.Length > 0)
                     ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
             });

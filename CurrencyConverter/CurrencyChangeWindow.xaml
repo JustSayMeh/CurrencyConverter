@@ -14,13 +14,13 @@
                 Style="{StaticResource NavigationBackButtonNormalStyle}"
                 IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
                 ToolTipService.ToolTip="Back"/>
-            <TextBlock FontSize="20" FontWeight="Bold" VerticalAlignment="Center">К конвертору</TextBlock>
+            <TextBlock FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Text="{StaticResource to_convertor_string}"/> 
         </StackPanel>
-        <TextBlock FontSize="20" FontWeight="Bold" HorizontalTextAlignment="Center" Margin="0,0,30,0">Выберите валюты</TextBlock>
-    
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <TextBlock FontSize="20" FontWeight="Bold" HorizontalTextAlignment="Center" Margin="0,0,30,0" Text="{StaticResource set_valute_string}"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <StackPanel Margin="10, 0, 10, 0" Orientation="Vertical">
-                <TextBox x:Name="TextBoxA" KeyUp="TextBoxA_KeyUp" PlaceholderText="Поиск"></TextBox>
+                <TextBox x:Name="TextBoxA" KeyUp="TextBoxA_KeyUp" PlaceholderText="{StaticResource search_string}"></TextBox>
                 <ListBox Name="listA" Width="250" Height="300" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -33,7 +33,7 @@
                 </ListBox>
             </StackPanel>
             <StackPanel Margin="10, 0, 10, 0" Orientation="Vertical">
-                <TextBox x:Name="TextBoxB" KeyUp="TextBoxB_KeyUp" PlaceholderText="Поиск"></TextBox>
+                <TextBox x:Name="TextBoxB" KeyUp="TextBoxB_KeyUp" PlaceholderText="{StaticResource search_string}"></TextBox>
                 <ListBox Name="listB" Width="250" Height="300">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -47,8 +47,8 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50, 50, 30, 50">
-            <Button Content="Ok" Click="Button_Ok" Custom:DockPanel.Dock="Bottom" Margin="0, 0, 30, 0"  Width="100"></Button>
-            <Button Content="Отмена" Click="Button_Back" Custom:DockPanel.Dock="Bottom" Width="100"></Button>
+            <Button Content="{StaticResource ok_string}" Click="Button_Ok" Custom:DockPanel.Dock="Bottom" Margin="0, 0, 30, 0"  Width="100"></Button>
+            <Button Content="{StaticResource cancel_string}" Click="Button_Back" Custom:DockPanel.Dock="Bottom" Width="100"></Button>
         </StackPanel>
     </StackPanel>
 </Page>

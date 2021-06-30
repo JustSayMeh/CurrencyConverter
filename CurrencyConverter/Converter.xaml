@@ -12,18 +12,18 @@
         <controls:DockPanel>
             <StackPanel Margin="10,0,10,0">
                 <TextBox Name="ValueA" Height="auto"  Width="150" controls:DockPanel.Dock="Left" TextChanged="ValueA_TextChanged" BeforeTextChanging="Value_BeforeTextChanging" />
-                <TextBlock Name="ValuteA">RUB</TextBlock>
+                <TextBlock Name="ValuteA"/>
             </StackPanel>
             <StackPanel  Margin="10,0,10,0" >
                 <TextBox Name="ValueB" Height="auto" Width="150" controls:DockPanel.Dock="Right"  TextChanged="ValueB_TextChanged" BeforeTextChanging="Value_BeforeTextChanging"/>
-                <TextBlock Name="ValuteB">USD</TextBlock>
+                <TextBlock Name="ValuteB"/>
             </StackPanel>
             
             
         
         </controls:DockPanel>
         <StackPanel Name="ConvertButton" Height="auto" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Change" controls:DockPanel.Dock="Bottom" Click="ChangeButton_Click"/>
+            <Button Name="button" Content="{StaticResource set_valutes_string}" controls:DockPanel.Dock="Bottom" Click="ChangeButton_Click" Width="200"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

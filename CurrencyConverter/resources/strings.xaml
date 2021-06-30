@@ -1,0 +1,11 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <x:String x:Key="set_valutes_string">Задайте валюты!</x:String>
+    <x:String x:Key="change_valutes_string">Изменить выбор</x:String>
+    <x:String x:Key="ok_string">Ок</x:String>
+    <x:String x:Key="cancel_string">Отмена</x:String>
+    <x:String x:Key="to_convertor_string">К Конвертору</x:String>
+    <x:String x:Key="set_valute_string">Выберите валюты</x:String>
+    <x:String x:Key="search_string">Поиск</x:String>
+</ResourceDictionary>
