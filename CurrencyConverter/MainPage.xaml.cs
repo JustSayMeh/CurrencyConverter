@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CurrencyConverter;
+using System.Threading;
+using Windows.UI.ViewManagement;
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
 namespace CurrencyConverter
@@ -26,12 +28,53 @@ namespace CurrencyConverter
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        FinanceSource source;
         public MainPage()
         {
             this.InitializeComponent();
+            source = CBRFinanceSource.GetInstance();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            var r = CBRFinanceSource.GetInstance().DoRequestWintHandle();
-            converter.SetParams(r);
+            Update();
+            Task.Factory.StartNew(TaskMethod);
+            
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            Update();
+            Task.Factory.StartNew(TaskMethod);
+        }
+
+        private void updateDateTextBox(IFinanceExchange r)
+        {
+            dateofupdate.Text = $"Данные на момент времени: {r.Date}";
+        }
+        private void  Update()
+        {
+            LoadingIndicator.Visibility = Visibility.Visible;
+            converter.Visibility = Visibility.Collapsed;
+            CommadBar.Visibility = Visibility.Collapsed;
+            Datepanel.Visibility = Visibility.Collapsed;
+        }
+        private void Updated()
+        {
+            LoadingIndicator.Visibility = Visibility.Collapsed;
+            converter.Visibility = Visibility.Visible;
+            CommadBar.Visibility = Visibility.Visible;
+            Datepanel.Visibility = Visibility.Visible;
+        }
+        private async void TaskMethod()
+        {
+            
+            var r = source.DoRequestWintHandle();
+            Thread.Sleep(2000);
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                LoadingIndicator.Visibility = Visibility.Collapsed;
+                updateDateTextBox(r);
+                converter.SetParams(r);
+                Updated();
+            });
+
         }
     }
 }

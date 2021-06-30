@@ -40,8 +40,17 @@ namespace CurrencyConverter
             action = bind.Item2;
             A = bind.Item3;
             B = bind.Item4;
-            listA.SelectedIndex = dictionary.Keys.ToList().IndexOf(A);
-            listB.SelectedIndex = dictionary.Keys.ToList().IndexOf(B);
+            if (A.Length > 0)
+            {
+                listA.SelectedIndex = dictionary.Keys.ToList().IndexOf(A);
+                listB.SelectedIndex = dictionary.Keys.ToList().IndexOf(B);
+            }
+            else
+            {
+                listA.SelectedIndex = 0;
+                listB.SelectedIndex = 1;
+            }
+           
         }
 
         private void Button_Ok(object sender, RoutedEventArgs e)

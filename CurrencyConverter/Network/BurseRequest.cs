@@ -11,7 +11,7 @@ namespace CurrencyConverter.Network
 {
     class BurseRequest
     {
-        public static async Task<(string ResponseString, HttpStatusCode ResponseCode)> getStockQuotesAsync(string url)
+        public static (string ResponseString, HttpStatusCode ResponseCode) getStockQuotes(string url)
         {
             string response_string = "";
             HttpWebRequest request = (HttpWebRequest)  WebRequest.Create(url);

@@ -20,6 +20,8 @@ namespace CurrencyConverter.Model
 
     public interface IFinanceExchange
     {
+        string Date { get; }
+        string Timestamp { get;  }
         SortedDictionary<string, Currency> Valute { get;}
         IEnumerable<string> GetCurrenciesNames();
         IEnumerable<Currency> GetCurrencies();

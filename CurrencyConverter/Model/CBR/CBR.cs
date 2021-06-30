@@ -17,7 +17,7 @@ namespace CurrencyConverter.Model.CBR
 
         public override IFinanceExchange DoRequestWintHandle()
         {
-            var response = BurseRequest.getStockQuotesAsync(Url).Result;
+            var response = BurseRequest.getStockQuotes(Url);
             if (response.ResponseCode == HttpStatusCode.OK)
                 return CBRXmlDailyResponse.LoadFromText(response.ResponseString);
             

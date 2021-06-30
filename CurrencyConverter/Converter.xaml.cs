@@ -52,7 +52,7 @@ namespace CurrencyConverter
     {
         private char culture_separator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator.ToCharArray()[0];
         private IFinanceExchange financeExchange;
-        private ConverterCalculator converterCalculator;
+        private ConverterCalculator converterCalculator = null;
         public Converter()
         {
             this.InitializeComponent();
@@ -96,11 +96,24 @@ namespace CurrencyConverter
         public void SetParams(IFinanceExchange financeExchange)
         {
             this.financeExchange = financeExchange;
-            var AB = financeExchange.GetInitPair();
-            ValuteA.Text = AB.Item1.CharCode;
-            ValuteB.Text = AB.Item2.CharCode;
-            converterCalculator = new ConverterCalculator(AB.Item1, AB.Item2);
-            ConverterMain.Visibility = Visibility.Visible;
+            if (converterCalculator != null)
+            {
+                converterCalculator = new ConverterCalculator(financeExchange.Valute[converterCalculator.A.CharCode], financeExchange.Valute[converterCalculator.B.CharCode]);
+                ValuteA.Text = converterCalculator.A.CharCode;
+                ValuteB.Text = converterCalculator.B.CharCode;
+                if (ValueA.Text.Length > 0)
+                    ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
+            }
+            else
+            {
+                ValueA.IsEnabled = false;
+                ValueB.IsEnabled = false;
+                ValuteA.Text = "---";
+                ValuteB.Text = "---";
+
+            }
+            
+    
         }
 
 
@@ -113,11 +126,16 @@ namespace CurrencyConverter
                 Currency B = financeExchange.Valute[para.B];
                 ValuteA.Text = A.CharCode;
                 ValuteB.Text = B.CharCode;
-                converterCalculator.SetCoef(A, B);
+                ValueA.IsEnabled = true;
+                ValueB.IsEnabled = true;
+                converterCalculator = new ConverterCalculator(A, B);
                 if (ValueA.Text.Length > 0)
                     ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
             });
-            rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode));
+            if (converterCalculator != null)
+                rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode));
+            else
+                rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, "", ""));
         }
     }
 }
