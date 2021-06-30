@@ -19,12 +19,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CurrencyConverter
 {
-    class ConverterCalculator
+    class Converter
     {
         public Currency A { get; private set; }
         public Currency B { get; private set; }
         private double coef;
-        public ConverterCalculator(Currency A, Currency B)
+        public Converter(Currency A, Currency B)
         {
             SetCoef(A, B);
         }
@@ -48,13 +48,13 @@ namespace CurrencyConverter
         }
         
     }
-    public sealed partial class Converter : UserControl
+    public sealed partial class ConverterControl : UserControl
     {
         private string change_valutes_string = (string)Application.Current.Resources["change_valutes_string"];
         private char culture_separator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator.ToCharArray()[0];
         private IFinanceExchange financeExchange;
-        private ConverterCalculator converterCalculator = null;
-        public Converter()
+        private Converter converterCalculator = null;
+        public ConverterControl()
         {
             this.InitializeComponent();
         }
@@ -99,7 +99,7 @@ namespace CurrencyConverter
             this.financeExchange = financeExchange;
             if (converterCalculator != null)
             {
-                converterCalculator = new ConverterCalculator(financeExchange.Valute[converterCalculator.A.CharCode], financeExchange.Valute[converterCalculator.B.CharCode]);
+                converterCalculator = new Converter(financeExchange.Valute[converterCalculator.A.CharCode], financeExchange.Valute[converterCalculator.B.CharCode]);
                 ValuteA.Text = converterCalculator.A.CharCode;
                 ValuteB.Text = converterCalculator.B.CharCode;
                 if (ValueA.Text.Length > 0)
@@ -129,7 +129,7 @@ namespace CurrencyConverter
                 ValuteB.Text = B.CharCode;
                 ValueA.IsEnabled = true;
                 ValueB.IsEnabled = true;
-                converterCalculator = new ConverterCalculator(A, B);
+                converterCalculator = new Converter(A, B);
                 button.Content = change_valutes_string;
                 if (ValueA.Text.Length > 0)
                     ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();

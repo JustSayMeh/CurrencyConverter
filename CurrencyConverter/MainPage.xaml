@@ -17,7 +17,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Goldenrod" Padding="10, 5, 10, 5" x:Name="Datepanel">
             <TextBlock x:Name="dateofupdate"/>
         </StackPanel>
-        <local:Converter x:Name="converter" Margin="0, 50, 0, 0"/>
+        <local:ConverterControl x:Name="converter" Margin="0, 50, 0, 0"/>
         <ProgressRing x:Name="LoadingIndicator" IsActive="True" Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 50, 0, 0"/>
         <!--<StackPanel RelativePanel.AlignRightWithPanel="True">
             <StackPanel Orientation="Horizontal">

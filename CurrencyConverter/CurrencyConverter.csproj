@@ -119,8 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converter.xaml.cs">
-      <DependentUpon>Converter.xaml</DependentUpon>
+    <Compile Include="ConverterControl.xaml.cs">
+      <DependentUpon>ConverterControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CurrencyChangeWindow.xaml.cs">
       <DependentUpon>CurrencyChangeWindow.xaml</DependentUpon>
@@ -132,7 +132,6 @@
     <Compile Include="Model\ResponseParser.cs" />
     <Compile Include="Model\ResultHandler.cs" />
     <Compile Include="Network\BurseRequest.cs" />
-    <Compile Include="Network\CBRXmlDaily.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,7 +154,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Converter.xaml">
+    <Page Include="ConverterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -46,6 +46,7 @@ namespace CurrencyConverter.Model.CBR
             rub.Value = 1;
             rub.CharCode = "RUB";
             rub.Nominal = 1;
+            rub.Name = "Российский рубль";
             Valute.Add("RUB", rub);
         }
         public SortedDictionary<string, Currency> Valute { get; set; }
