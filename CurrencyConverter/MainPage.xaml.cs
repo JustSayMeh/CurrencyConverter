@@ -28,6 +28,7 @@ namespace CurrencyConverter
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        string data_for_currenttime_string = (string)Application.Current.Resources["data_for_currenttime_string"];
         FinanceSource source;
         public MainPage()
         {
@@ -47,7 +48,7 @@ namespace CurrencyConverter
 
         private void updateDateTextBox(IFinanceExchange r)
         {
-            dateofupdate.Text = $"Данные на момент времени: {r.Date}";
+            dateofupdate.Text = $"{data_for_currenttime_string} {r.Date}";
         }
         private void  Update()
         {

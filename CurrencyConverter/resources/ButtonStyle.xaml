@@ -1,0 +1,25 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:x1="using:System">
+    <LinearGradientBrush x:Key="GrayBlueGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="DarkGray" Offset="0" />
+        <GradientStop Color="#cbcbcb" Offset="0.5" />
+        <GradientStop Color="DarkGray" Offset="1" />
+    </LinearGradientBrush>
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" >
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{TemplateBinding Background}"  RadiusX="5" RadiusY="5" />
+                        <controls:DockPanel>
+                            <ContentPresenter HorizontalAlignment="Center" Margin="5" Content="{TemplateBinding Content}" />
+                        </controls:DockPanel>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
