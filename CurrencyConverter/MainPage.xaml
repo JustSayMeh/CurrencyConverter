@@ -7,10 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <controls:DockPanel>
-
-        <local:Converter x:Name="converter" />
+    <Page.TopAppBar>
+        <CommandBar OverflowButtonVisibility="Collapsed">
+            <AppBarButton Icon="RepeatAll" Label="Repeat" />
+        </CommandBar>
+    </Page.TopAppBar>
+    <StackPanel>
+ 
+        <local:Converter x:Name="converter" Margin="0, 30, 0, 0"/>
         <!--<StackPanel RelativePanel.AlignRightWithPanel="True">
             <StackPanel Orientation="Horizontal">
                 <RadioButton></RadioButton>
@@ -60,5 +64,5 @@
 
             </controls:DataGrid>
         </StackPanel>-->
-    </controls:DockPanel>
+    </StackPanel>
 </Page>

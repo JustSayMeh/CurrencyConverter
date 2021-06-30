@@ -19,12 +19,40 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CurrencyConverter
 {
+    class ConverterCalculator
+    {
+        public Currency A { get; private set; }
+        public Currency B { get; private set; }
+        private double coef;
+        public ConverterCalculator(Currency A, Currency B)
+        {
+            SetCoef(A, B);
+        }
+        public void SetCoef(Currency A, Currency B)
+        {
+            this.A = A;
+            this.B = B;
+            coef = (A.Value / A.Nominal) / (B.Value / B.Nominal);
+        }
+        public double AtoB(double v)
+        {
+            return v * coef;
+        }
+        public double BtoA(double v)
+        {
+            return v / coef;
+        }
+        public void swap()
+        {
+            coef = 1 / coef;
+        }
+        
+    }
     public sealed partial class Converter : UserControl
     {
         private char culture_separator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator.ToCharArray()[0];
-        private Currency A = null, B = null;
         private IFinanceExchange financeExchange;
-        private double coef = 1;
+        private ConverterCalculator converterCalculator;
         public Converter()
         {
             this.InitializeComponent();
@@ -50,8 +78,8 @@ namespace CurrencyConverter
                 return;
             double newvalue = 0;
             if (ValueA.Text.Length > 0)
-                newvalue = double.Parse(ValueA.Text) * coef;
-            ValueB.Text = newvalue.ToString();
+                newvalue = double.Parse(ValueA.Text);
+            ValueB.Text = converterCalculator.AtoB(newvalue).ToString();
         }
 
         private void ValueB_TextChanged(object sender, TextChangedEventArgs e)
@@ -60,18 +88,18 @@ namespace CurrencyConverter
                 return;
             double newvalue = 0;
             if (ValueB.Text.Length > 0)
-                newvalue = double.Parse(ValueB.Text) / coef;
-            ValueA.Text = newvalue.ToString();
+                newvalue = double.Parse(ValueB.Text);
+            ValueA.Text = converterCalculator.BtoA(newvalue).ToString();
         }
 
 
         public void SetParams(IFinanceExchange financeExchange)
         {
             this.financeExchange = financeExchange;
-            (A, B) = financeExchange.GetInitPair();
-            ValuteA.Text = A.CharCode;
-            ValuteB.Text = B.CharCode;
-            coef = (A.Value / A.Nominal) / (B.Value / B.Nominal);
+            var AB = financeExchange.GetInitPair();
+            ValuteA.Text = AB.Item1.CharCode;
+            ValuteB.Text = AB.Item2.CharCode;
+            converterCalculator = new ConverterCalculator(AB.Item1, AB.Item2);
             ConverterMain.Visibility = Visibility.Visible;
         }
 
@@ -81,13 +109,15 @@ namespace CurrencyConverter
             Frame rootFrame = Window.Current.Content as Frame;
             Action<(string A,  string B)> _backAction = new Action<(string A, string B)>((para) =>
             {
-                A = financeExchange.Valute[para.A];
-                B = financeExchange.Valute[para.B];
+                Currency A = financeExchange.Valute[para.A];
+                Currency B = financeExchange.Valute[para.B];
                 ValuteA.Text = A.CharCode;
                 ValuteB.Text = B.CharCode;
-                coef = A.Value / B.Value;
+                converterCalculator.SetCoef(A, B);
+                if (ValueA.Text.Length > 0)
+                    ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
             });
-            rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.GetCurrenciesNames(), _backAction, A.CharCode, B.CharCode));
+            rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode));
         }
     }
 }
