@@ -7,24 +7,28 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
-        <Style x:Key="ButtonStyle1" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Grid Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                            <Rectangle Fill="{TemplateBinding Background}" HorizontalAlignment="Stretch" RadiusX="5" RadiusY="5" VerticalAlignment="Stretch"/>
-                            <Custom:DockPanel>
-                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" Margin="5"/>
-                            </Custom:DockPanel>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
     <StackPanel>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="500" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="buttonstackpanel.Margin" Value="50, 50, 30, 50"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState >
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="listA.Height" Value="150"></Setter>
+                        <Setter Target="listB.Height" Value="150"></Setter>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <StackPanel Orientation="Horizontal" Margin="0,0,30,0">
             <Button x:Name="BackButton"
                 Click="Button_Back"
@@ -65,8 +69,8 @@
                 </ListBox>
             </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="50, 50, 30, 50">
-            <Button Style="{StaticResource ButtonStyle1}" x:Name="ok_button" Content="{StaticResource ok_string}" Click="Button_Ok" Custom:DockPanel.Dock="Bottom" Margin="0, 0, 30, 0"  Width="100"/>
+        <StackPanel x:Name="buttonstackpanel" Orientation="Horizontal" HorizontalAlignment="Right" Margin="50, 10, 30, 10" >
+            <Button x:Name="ok_button" Content="{StaticResource ok_string}" Click="Button_Ok" Custom:DockPanel.Dock="Bottom" Margin="0, 0, 30, 0"  Width="100"/>
             <Button Content="{StaticResource cancel_string}" Click="Button_Back" Custom:DockPanel.Dock="Bottom" Width="100"></Button>
         </StackPanel>
     </StackPanel>

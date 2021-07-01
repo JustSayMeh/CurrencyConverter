@@ -40,7 +40,7 @@ namespace CurrencyConverter
             action = bind.Item2;
             A = bind.Item3;
             B = bind.Item4;
-            if (A.Length > 0)
+            if (A.Length > 0 || B.Length > 0)
             {
                 listA.SelectedIndex = dictionary.Keys.ToList().IndexOf(A);
                 listB.SelectedIndex = dictionary.Keys.ToList().IndexOf(B);
