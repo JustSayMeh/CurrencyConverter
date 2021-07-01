@@ -46,7 +46,14 @@ namespace CurrencyConverter
         {
             SetCoef(B, A);
         }
-        
+        public string BtoAString(double v)
+        {
+            return BtoA(v).ToString("F5");
+        }
+        public string AtoBString(double v)
+        {
+            return AtoB(v).ToString("F5");
+        }
     }
     public sealed partial class ConverterControl : UserControl
     {
@@ -80,7 +87,7 @@ namespace CurrencyConverter
             double newvalue = 0;
             if (ValueA.Text.Length > 0)
                 newvalue = double.Parse(ValueA.Text);
-            ValueB.Text = converterCalculator.AtoB(newvalue).ToString();
+            ValueB.Text = converterCalculator.AtoBString(newvalue);
         }
 
         private void ValueB_TextChanged(object sender, TextChangedEventArgs e)
@@ -90,7 +97,7 @@ namespace CurrencyConverter
             double newvalue = 0;
             if (ValueB.Text.Length > 0)
                 newvalue = double.Parse(ValueB.Text);
-            ValueA.Text = converterCalculator.BtoA(newvalue).ToString();
+            ValueA.Text = converterCalculator.BtoAString(newvalue);
         }
 
 
@@ -148,8 +155,8 @@ namespace CurrencyConverter
             ValuteA.Text = converterCalculator.A.CharCode;
             ValuteB.Text = converterCalculator.B.CharCode;
             if (ValueA.Text.Length > 0)
-                ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
-            information_textblock.Text = $"1 {converterCalculator.A.CharCode} = {converterCalculator.AtoB(1)} {converterCalculator.B.CharCode}";
+                ValueB.Text = converterCalculator.AtoBString(double.Parse(ValueA.Text)).ToString();
+            information_textblock.Text = $"1 {converterCalculator.A.CharCode} = {converterCalculator.AtoBString(1)} {converterCalculator.B.CharCode}";
         }
     }
 }
