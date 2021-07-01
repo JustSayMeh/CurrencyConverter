@@ -111,7 +111,7 @@ namespace CurrencyConverter
             string mask = textbox.Text;
             if (mask.Length == 0)
                 ItemList.ItemsSource = dictionary;
-            ItemList.ItemsSource = dictionary.Where(item => item.Key.StartsWith(mask));
+            ItemList.ItemsSource = dictionary.Where(item => item.Key.StartsWith(mask, StringComparison.OrdinalIgnoreCase));
             if (ItemList.SelectedIndex == -1 && ItemList.Items.Count > 0)
                 ItemList.SelectedIndex = 0;
 
