@@ -13,12 +13,21 @@
             <AppBarButton Icon="RepeatAll" Label="Repeat" Click="Update_Click" />
         </CommandBar>
     </Page.TopAppBar>
-    <StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Goldenrod" Padding="10, 5, 10, 5" x:Name="Datepanel">
+    <Grid Background="AliceBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+     
+            <ColumnDefinition></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Goldenrod" Padding="10, 5, 10, 5" x:Name="Datepanel" Grid.Column="0" Grid.Row="0">
             <TextBlock x:Name="dateofupdate"/>
         </StackPanel>
-        <local:ConverterControl x:Name="converter" Margin="0, 50, 0, 0"/>
-        <ProgressRing x:Name="LoadingIndicator" IsActive="True" Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 50, 0, 0"/>
+        <local:ConverterControl x:Name="converter" Margin="0, 50, 0, 0" Grid.Column="0" Grid.Row="1"/>
+        <ProgressRing x:Name="LoadingIndicator" IsActive="True" Width="150" Height="150" Grid.Column="0" Grid.Row="1"/>
         <!--<StackPanel RelativePanel.AlignRightWithPanel="True">
             <StackPanel Orientation="Horizontal">
                 <RadioButton></RadioButton>
@@ -68,5 +77,6 @@
 
             </controls:DataGrid>
         </StackPanel>-->
-    </StackPanel>
+
+    </Grid>
 </Page>
