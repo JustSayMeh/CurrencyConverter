@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using CurrencyConverter;
 using System.Threading;
 using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.Core;
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
 namespace CurrencyConverter
@@ -29,6 +30,9 @@ namespace CurrencyConverter
     public sealed partial class MainPage : Page
     {
         string data_for_currenttime_string = (string)Application.Current.Resources["data_for_currenttime_string"];
+        string error_string = (string)Application.Current.Resources["error_string"];
+        string net_error_string = (string)Application.Current.Resources["net_error_string"];
+        string ok_string = (string)Application.Current.Resources["ok_string"];
         FinanceSource source;
         public MainPage()
         {
@@ -66,15 +70,30 @@ namespace CurrencyConverter
         }
         private async void TaskMethod()
         {
-            
-            var r = source.DoRequestWintHandle();
-            Thread.Sleep(2000);
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                LoadingIndicator.Visibility = Visibility.Collapsed;
-                updateDateTextBox(r);
-                converter.SetParams(r);
-                Updated();
-            });
+            try
+            {
+                var r = source.DoRequestWintHandle();
+                Thread.Sleep(2000);
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                    LoadingIndicator.Visibility = Visibility.Collapsed;
+                    updateDateTextBox(r);
+                    converter.SetParams(r);
+                    Updated();
+                });
+            }catch (Exception e)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
+                    ContentDialog contentDialog = new ContentDialog
+                    {
+                        Title = error_string,
+                        Content = net_error_string,
+                        PrimaryButtonText = ok_string,
+                    };
+                    await contentDialog.ShowAsync();
+                    CoreApplication.Exit();
+                });
+            }
+           
 
         }
     }
