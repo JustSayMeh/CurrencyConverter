@@ -72,36 +72,46 @@ namespace CurrencyConverter
             // скипнуть обработку, если изменения были програмными
             if (((TextBox)sender).FocusState == FocusState.Unfocused)
                 return;
-            args.Cancel = args.NewText.Any(c =>
-            {
-                bool ret = !char.IsDigit(c) && (c != culture_separator || !flag);
-                if (c == culture_separator && flag)
-                    flag = false;
-                return ret;
-            });
+            if (args.NewText.Length > 10)
+                args.Cancel = true;
+            else
+                args.Cancel = args.NewText.Any(c =>
+                {
+                    bool ret = !char.IsDigit(c) && (c != culture_separator || !flag);
+                    if (c == culture_separator && flag)
+                        flag = false;
+                    return ret;
+                });
         }
 
         private void ValueA_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // скипнуть обработку, если изменения были програмными
-            if (ValueA.FocusState == FocusState.Unfocused)
-                return;
-            decimal newvalue = 0;
-            if (ValueA.Text.Length > 0)
-                newvalue = decimal.Parse(ValueA.Text);
-            ValueB.Text = converterCalculator.AtoBString(newvalue);
-        }
 
+            Value_TextChanged(ValueA, ValueB);
+        }
         private void ValueB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ValueB.FocusState == FocusState.Unfocused)
-                return;
-            decimal newvalue = 0;
-            if (ValueB.Text.Length > 0)
-                newvalue = decimal.Parse(ValueB.Text);
-            ValueA.Text = converterCalculator.BtoAString(newvalue);
+            Value_TextChanged(ValueB, ValueA);
         }
 
+        private void Value_TextChanged(TextBox A, TextBox B)
+        {
+            // скипнуть обработку, если изменения были програмными
+            if (A.FocusState == FocusState.Unfocused)
+                return;
+            decimal newvalue = 0;
+            if (A.Text.Length > 0)
+                //try
+                //{
+                    newvalue = decimal.Parse(A.Text);
+                //}
+                //catch (OverflowException exp)
+                //{
+                //    A.Text = "1";
+                //    newvalue = 1;
+                //}
+            B.Text = converterCalculator.AtoBString(newvalue);
+        }
         /// <summary>
         /// Задать параметры конвертора через объект IFinanceExchange
         /// </summary>
