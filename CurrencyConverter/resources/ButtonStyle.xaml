@@ -16,10 +16,10 @@
                         <controls:DockPanel>
                             <ContentPresenter HorizontalAlignment="Center" Margin="5" Content="{TemplateBinding Content}" />
                         </controls:DockPanel>
-
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
     </Style>
 </ResourceDictionary>

@@ -51,16 +51,22 @@ namespace CurrencyConverter
                 listB.SelectedIndex = 1;
             }
            
+            
         }
-
+        private KeyValuePair<string, Currency> getSelectedItem(ListBox list)
+        {
+            if (list.SelectedItem != null)
+                return (KeyValuePair<string, Currency>)list.SelectedItem;
+            return default(KeyValuePair<string, Currency>);
+        }
         private void Button_Ok(object sender, RoutedEventArgs e)
         {
         
-            action.Invoke((((KeyValuePair<string, Currency>)listA.SelectedItem).Key, (((KeyValuePair<string, Currency>)listB.SelectedItem).Key)));
+            action.Invoke((getSelectedItem(listA).Key, getSelectedItem(listB).Key));
             Frame.GoBack();
         }
 
-        protected void Button_Back(object sender, RoutedEventArgs e)
+        private void Button_Back(object sender, RoutedEventArgs e)
         {
             Frame.GoBack();
         }
@@ -76,17 +82,47 @@ namespace CurrencyConverter
             TextBox_KeyUp(TextBoxB, listB);
         }
 
+        private void listA_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            list_SelectionChanged(listA, CurrentValueA);
+        }
 
+        private void listB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            list_SelectionChanged(listB, CurrentValueB);
+        }
 
-
+        private void list_SelectionChanged(ListBox list, TextBlock text)
+        {
+            if (listA.SelectedIndex > -1 && listB.SelectedIndex > -1)
+            {
+                ok_button.Opacity = 1;
+                ok_button.IsEnabled = true;
+            }
+            if (list.SelectedIndex == -1)
+            {
+                if (list.Items.Count == 0)
+                {
+                    ok_button.Opacity = 0.1;
+                    ok_button.IsEnabled = false;
+                }
+                else
+                    list.SelectedIndex = 0;
+                return;
+            }
+            text.Text = getSelectedItem(list).Key;
+        }
 
 
         private void TextBox_KeyUp(TextBox textbox, ListBox ItemList)
-        {
+        {       
             string mask = textbox.Text;
             if (mask.Length == 0)
                 ItemList.ItemsSource = dictionary;
             ItemList.ItemsSource = dictionary.Where(item => item.Key.StartsWith(mask));
+            if (ItemList.SelectedIndex == -1 && ItemList.Items.Count > 0)
+                ItemList.SelectedIndex = 0;
+
         }
 
     }
