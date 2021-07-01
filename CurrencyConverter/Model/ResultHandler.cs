@@ -40,6 +40,6 @@ namespace CurrencyConverter.Model
             Name = name;
             Url = url;
         }
-        public abstract IFinanceExchange DoRequestWintHandle();
+        public abstract Task<IFinanceExchange> DoRequestWintHandle();
     }
 }

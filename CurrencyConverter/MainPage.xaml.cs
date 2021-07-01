@@ -61,7 +61,8 @@ namespace CurrencyConverter
             CommadBar.Visibility = Visibility.Collapsed;
             Datepanel.Visibility = Visibility.Collapsed;
             // запуск параллельной задачи
-            Task.Factory.StartNew(TaskMethod);
+            TaskMethod();
+           
         }
         private void Updated()
         {
@@ -75,29 +76,26 @@ namespace CurrencyConverter
             try
             {
                 // получить результаты запроса
-                var r = source.DoRequestWintHandle();
+                var r = await source.DoRequestWintHandle();
                 // Искуственная задержка для демострации спинера
-                Thread.Sleep(1000);
-                // запустить в потоке UI
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
-                    LoadingIndicator.Visibility = Visibility.Collapsed;
-                    updateDateTextBox(r);
-                    // задать параметры для контрола ковертора
-                    converter.SetParams(r);
-                    Updated();
-                });
+                await Task.Delay(1000);
+                LoadingIndicator.Visibility = Visibility.Collapsed;
+                updateDateTextBox(r);
+                // задать параметры для контрола ковертора
+                converter.SetParams(r);
+                Updated();
+                
             }catch (WebException e)
             {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
-                    ContentDialog contentDialog = new ContentDialog
-                    {
-                        Title = error_string,
-                        Content = net_error_string,
-                        PrimaryButtonText = ok_string,
-                    };
-                    await contentDialog.ShowAsync();
-                    CoreApplication.Exit();
-                });
+                ContentDialog contentDialog = new ContentDialog
+                {
+                    Title = error_string,
+                    Content = net_error_string,
+                    PrimaryButtonText = ok_string,
+                };
+                await contentDialog.ShowAsync();
+                CoreApplication.Exit();
+         
             }
            
 

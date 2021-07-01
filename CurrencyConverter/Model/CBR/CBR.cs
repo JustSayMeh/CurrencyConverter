@@ -15,9 +15,9 @@ namespace CurrencyConverter.Model.CBR
         private static FinanceSource instance = null;
         protected CBRFinanceSource() : base("CBR", "https://www.cbr-xml-daily.ru/daily_json.js") { }
 
-        public override IFinanceExchange DoRequestWintHandle()
+        public async override Task<IFinanceExchange> DoRequestWintHandle()
         {
-            var response = BurseRequest.getStockQuotes(Url);
+            var response = await BurseRequest.getStockQuotesAsync(Url);
             if (response.ResponseCode == HttpStatusCode.OK)
                 return CBRXmlDailyResponse.LoadFromText(response.ResponseString);
 
