@@ -9,19 +9,24 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" x:Name="ConverterMain">
-        <controls:DockPanel>
-            <StackPanel Margin="10,0,10,0">
+        <StackPanel Orientation="Horizontal" Padding="10, 0, 10, 0">
+            <StackPanel >
                 <TextBox Name="ValueA" Height="auto"  Width="150" controls:DockPanel.Dock="Left" TextChanged="ValueA_TextChanged" BeforeTextChanging="Value_BeforeTextChanging" />
                 <TextBlock Name="ValuteA"/>
             </StackPanel>
-            <StackPanel  Margin="10,0,10,0" >
+            <Button Margin="15, 0, 15, 0" Background="AliceBlue" Click="Transfer_Button_Click">
+                <StackPanel>
+                    <Image Source="{StaticResource transfer_icon}" Width="40"/>
+                </StackPanel>
+            </Button>
+            <StackPanel  >
                 <TextBox Name="ValueB" Height="auto" Width="150" controls:DockPanel.Dock="Right"  TextChanged="ValueB_TextChanged" BeforeTextChanging="Value_BeforeTextChanging"/>
                 <TextBlock Name="ValuteB"/>
             </StackPanel>
             
             
         
-        </controls:DockPanel>
+        </StackPanel>
         <StackPanel Name="ConvertButton" Height="auto" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Name="button" Content="{StaticResource set_valutes_string}" controls:DockPanel.Dock="Bottom" Click="ChangeButton_Click" Width="200"/>
         </StackPanel>

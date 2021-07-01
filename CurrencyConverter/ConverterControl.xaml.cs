@@ -44,7 +44,7 @@ namespace CurrencyConverter
         }
         public void swap()
         {
-            coef = 1 / coef;
+            SetCoef(B, A);
         }
         
     }
@@ -138,6 +138,17 @@ namespace CurrencyConverter
                 rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode));
             else
                 rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, "", ""));
+        }
+
+        private void Transfer_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (converterCalculator == null)
+                return;
+            converterCalculator.swap();
+            ValuteA.Text = converterCalculator.A.CharCode;
+            ValuteB.Text = converterCalculator.B.CharCode;
+            if (ValueA.Text.Length > 0)
+                ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
         }
     }
 }

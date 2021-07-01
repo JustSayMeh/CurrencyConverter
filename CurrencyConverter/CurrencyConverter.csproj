@@ -140,6 +140,8 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\transfer.svg" />
+    <Content Include="images\transfer.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -167,6 +169,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="resources\ButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="resources\icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

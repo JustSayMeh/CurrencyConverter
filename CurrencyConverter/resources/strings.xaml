@@ -8,6 +8,6 @@
     <x:String x:Key="to_convertor_string">К Конвертору</x:String>
     <x:String x:Key="set_valute_string">Выберите валюты</x:String>
     <x:String x:Key="search_string">Поиск</x:String>
-    <x:String x:Key="data_for_currenttime_string">Данные на момент времени:</x:String>
+    <x:String x:Key="data_for_currenttime_string">Данные за </x:String>
     
 </ResourceDictionary>
