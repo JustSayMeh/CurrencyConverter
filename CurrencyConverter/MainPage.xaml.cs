@@ -20,6 +20,7 @@ using CurrencyConverter;
 using System.Threading;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
+using System.Net;
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
 namespace CurrencyConverter
@@ -80,7 +81,7 @@ namespace CurrencyConverter
                     converter.SetParams(r);
                     Updated();
                 });
-            }catch (Exception e)
+            }catch (WebException e)
             {
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => {
                     ContentDialog contentDialog = new ContentDialog

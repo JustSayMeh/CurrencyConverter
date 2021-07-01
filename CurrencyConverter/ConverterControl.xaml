@@ -23,10 +23,11 @@
                 <TextBox Name="ValueB" Height="auto" Width="150" controls:DockPanel.Dock="Right"  TextChanged="ValueB_TextChanged" BeforeTextChanging="Value_BeforeTextChanging"/>
                 <TextBlock Name="ValuteB"/>
             </StackPanel>
-            
-            
+
+      
         
         </StackPanel>
+        <TextBlock x:Name="information_textblock" HorizontalAlignment="Center"/>
         <StackPanel Name="ConvertButton" Height="auto" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Name="button" Content="{StaticResource set_valutes_string}" controls:DockPanel.Dock="Bottom" Click="ChangeButton_Click" Width="200"/>
         </StackPanel>

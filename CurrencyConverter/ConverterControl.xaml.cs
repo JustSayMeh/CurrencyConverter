@@ -100,10 +100,7 @@ namespace CurrencyConverter
             if (converterCalculator != null)
             {
                 converterCalculator = new Converter(financeExchange.Valute[converterCalculator.A.CharCode], financeExchange.Valute[converterCalculator.B.CharCode]);
-                ValuteA.Text = converterCalculator.A.CharCode;
-                ValuteB.Text = converterCalculator.B.CharCode;
-                if (ValueA.Text.Length > 0)
-                    ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
+                setTextBoxtext();
             }
             else
             {
@@ -125,14 +122,11 @@ namespace CurrencyConverter
             {
                 Currency A = financeExchange.Valute[para.A];
                 Currency B = financeExchange.Valute[para.B];
-                ValuteA.Text = A.CharCode;
-                ValuteB.Text = B.CharCode;
-                ValueA.IsEnabled = true;
-                ValueB.IsEnabled = true;
                 converterCalculator = new Converter(A, B);
+                ValueA.IsEnabled = true;
+                ValueB.IsEnabled = true;  
                 button.Content = change_valutes_string;
-                if (ValueA.Text.Length > 0)
-                    ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
+                setTextBoxtext(); 
             });
             if (converterCalculator != null)
                 rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode));
@@ -145,10 +139,17 @@ namespace CurrencyConverter
             if (converterCalculator == null)
                 return;
             converterCalculator.swap();
+            setTextBoxtext();
+
+        }
+
+        private void setTextBoxtext()
+        {
             ValuteA.Text = converterCalculator.A.CharCode;
             ValuteB.Text = converterCalculator.B.CharCode;
             if (ValueA.Text.Length > 0)
                 ValueB.Text = converterCalculator.AtoB(double.Parse(ValueA.Text)).ToString();
+            information_textblock.Text = $"1 {converterCalculator.A.CharCode} = {converterCalculator.AtoB(1)} {converterCalculator.B.CharCode}";
         }
     }
 }
