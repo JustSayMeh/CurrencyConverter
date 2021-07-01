@@ -22,7 +22,7 @@ namespace CurrencyConverter
     {
         public Currency A { get; private set; }
         public Currency B { get; private set; }
-        private double coef;
+        private decimal coef;
         public Converter(Currency A, Currency B)
         {
             SetCoef(A, B);
@@ -33,11 +33,11 @@ namespace CurrencyConverter
             this.B = B;
             coef = (A.Value / A.Nominal) / (B.Value / B.Nominal);
         }
-        public double AtoB(double v)
+        public decimal AtoB(decimal v)
         {
             return v * coef;
         }
-        public double BtoA(double v)
+        public decimal BtoA(decimal v)
         {
             return v / coef;
         }
@@ -45,11 +45,11 @@ namespace CurrencyConverter
         {
             SetCoef(B, A);
         }
-        public string BtoAString(double v)
+        public string BtoAString(decimal v)
         {
             return BtoA(v).ToString("F5");
         }
-        public string AtoBString(double v)
+        public string AtoBString(decimal v)
         {
             return AtoB(v).ToString("F5");
         }
@@ -86,9 +86,9 @@ namespace CurrencyConverter
             // скипнуть обработку, если изменения были програмными
             if (ValueA.FocusState == FocusState.Unfocused)
                 return;
-            double newvalue = 0;
+            decimal newvalue = 0;
             if (ValueA.Text.Length > 0)
-                newvalue = double.Parse(ValueA.Text);
+                newvalue = decimal.Parse(ValueA.Text);
             ValueB.Text = converterCalculator.AtoBString(newvalue);
         }
 
@@ -96,9 +96,9 @@ namespace CurrencyConverter
         {
             if (ValueB.FocusState == FocusState.Unfocused)
                 return;
-            double newvalue = 0;
+            decimal newvalue = 0;
             if (ValueB.Text.Length > 0)
-                newvalue = double.Parse(ValueB.Text);
+                newvalue = decimal.Parse(ValueB.Text);
             ValueA.Text = converterCalculator.BtoAString(newvalue);
         }
 
@@ -166,7 +166,7 @@ namespace CurrencyConverter
             ValuteA.Text = converterCalculator.A.CharCode;
             ValuteB.Text = converterCalculator.B.CharCode;
             if (ValueA.Text.Length > 0)
-                ValueB.Text = converterCalculator.AtoBString(double.Parse(ValueA.Text)).ToString();
+                ValueB.Text = converterCalculator.AtoBString(decimal.Parse(ValueA.Text)).ToString();
             information_textblock.Text = $"1 {converterCalculator.A.CharCode} = {converterCalculator.AtoBString(1)} {converterCalculator.B.CharCode}";
         }
     }

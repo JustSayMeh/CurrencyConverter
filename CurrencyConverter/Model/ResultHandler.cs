@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CurrencyConverter.Model
 {
     /// <summary>
-    /// Валюта
+    /// Валюта 
     /// </summary>
     public class Currency
     {
@@ -17,8 +17,9 @@ namespace CurrencyConverter.Model
         public string CharCode { get; set; }
         public string NumCode { get; set; }
         public int Nominal { get; set; }
-        public double Value { get; set; }
-        public double Previous { get; set; }
+        
+        public decimal Value { get; set; }
+        public decimal Previous { get; set; }
     }
 
     public interface IFinanceExchange
