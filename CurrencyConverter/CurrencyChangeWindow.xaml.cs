@@ -15,12 +15,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
+
 
 namespace CurrencyConverter
 {
     /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
+    /// Страница изменения валют
     /// </summary>
     public sealed partial class CurrencyChangeWindow : Page
     {
@@ -33,6 +33,7 @@ namespace CurrencyConverter
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // Получить параметры, переданные из главной страницы
             var bind = ((SortedDictionary<string, Currency>, Action<(string A, string B)>, string, string))e.Parameter;
             dictionary = bind.Item1;
             listA.ItemsSource = dictionary;
@@ -40,6 +41,7 @@ namespace CurrencyConverter
             action = bind.Item2;
             A = bind.Item3;
             B = bind.Item4;
+            // Если валюты не были заданы, то задаем первую и вторую
             if (A.Length > 0 || B.Length > 0)
             {
                 listA.SelectedIndex = dictionary.Keys.ToList().IndexOf(A);
@@ -61,44 +63,33 @@ namespace CurrencyConverter
         }
         private void Button_Ok(object sender, RoutedEventArgs e)
         {
-        
             action.Invoke((getSelectedItem(listA).Key, getSelectedItem(listB).Key));
             Frame.GoBack();
         }
 
-        private void Button_Back(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
-        }
+        private void Button_Back(object sender, RoutedEventArgs e) => Frame.GoBack();
 
 
-        private void TextBoxA_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            TextBox_KeyUp(TextBoxA, listA);
-        }
+        private void TextBoxA_KeyUp(object sender, KeyRoutedEventArgs e) => TextBox_KeyUp(TextBoxA, listA);
 
-        private void TextBoxB_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            TextBox_KeyUp(TextBoxB, listB);
-        }
+        private void TextBoxB_KeyUp(object sender, KeyRoutedEventArgs e) => TextBox_KeyUp(TextBoxB, listB);
 
-        private void listA_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            list_SelectionChanged(listA, CurrentValueA);
-        }
+        private void listA_SelectionChanged(object sender, SelectionChangedEventArgs e)=> list_SelectionChanged(listA, CurrentValueA);
+     
+        private void listB_SelectionChanged(object sender, SelectionChangedEventArgs e) => list_SelectionChanged(listB, CurrentValueB);
 
-        private void listB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            list_SelectionChanged(listB, CurrentValueB);
-        }
+            
+       
 
         private void list_SelectionChanged(ListBox list, TextBlock text)
         {
+            
             if (listA.SelectedIndex > -1 && listB.SelectedIndex > -1)
             {
                 ok_button.Opacity = 1;
                 ok_button.IsEnabled = true;
             }
+            // Валюты могут быть не заданы в случае, если фильтр не дал результатов
             if (list.SelectedIndex == -1)
             {
                 if (list.Items.Count == 0)
@@ -115,7 +106,8 @@ namespace CurrencyConverter
 
 
         private void TextBox_KeyUp(TextBox textbox, ListBox ItemList)
-        {       
+        {     
+            // Фильтрация ввода
             string mask = textbox.Text;
             if (mask.Length == 0)
                 ItemList.ItemsSource = dictionary;

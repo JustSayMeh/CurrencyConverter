@@ -15,7 +15,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// Документацию по шаблону элемента "Пользовательский элемент управления" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace CurrencyConverter
 {
@@ -68,7 +67,9 @@ namespace CurrencyConverter
 
         private void Value_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
+            // фильтрация цифр 
             bool flag = true;
+            // скипнуть обработку, если изменения были програмными
             if (((TextBox)sender).FocusState == FocusState.Unfocused)
                 return;
             args.Cancel = args.NewText.Any(c =>
@@ -82,6 +83,7 @@ namespace CurrencyConverter
 
         private void ValueA_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // скипнуть обработку, если изменения были програмными
             if (ValueA.FocusState == FocusState.Unfocused)
                 return;
             double newvalue = 0;
@@ -100,10 +102,14 @@ namespace CurrencyConverter
             ValueA.Text = converterCalculator.BtoAString(newvalue);
         }
 
-
+        /// <summary>
+        /// Задать параметры конвертора через объект IFinanceExchange
+        /// </summary>
+        /// <param name="financeExchange"></param>
         public void SetParams(IFinanceExchange financeExchange)
         {
             this.financeExchange = financeExchange;
+            // Если ковертор не задан, то задать его
             if (converterCalculator != null)
             {
                 converterCalculator = new Converter(financeExchange.Valute[converterCalculator.A.CharCode], financeExchange.Valute[converterCalculator.B.CharCode]);
@@ -115,16 +121,15 @@ namespace CurrencyConverter
                 ValueB.IsEnabled = false;
                 ValuteA.Text = "---";
                 ValuteB.Text = "---";
-
             }
-            
-    
         }
 
 
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
+            // Вызов страницы изменения валют
             Frame rootFrame = Window.Current.Content as Frame;
+            // делегат обратного вызова, чтобы изменить параметры конвертора
             Action<(string A,  string B)> _backAction = new Action<(string A, string B)>((para) =>
             {
                 Currency A = financeExchange.Valute[para.A];
@@ -140,7 +145,11 @@ namespace CurrencyConverter
             else
                 rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, "", ""));
         }
-
+        /// <summary>
+        /// Свапнуть валюты
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Transfer_Button_Click(object sender, RoutedEventArgs e)
         {
             if (converterCalculator == null)
@@ -149,7 +158,9 @@ namespace CurrencyConverter
             setTextBoxtext();
 
         }
-
+        /// <summary>
+        /// Задать значения TextBlock и TextBox
+        /// </summary>
         private void setTextBoxtext()
         {
             ValuteA.Text = converterCalculator.A.CharCode;

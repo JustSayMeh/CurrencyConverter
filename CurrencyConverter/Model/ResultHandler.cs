@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace CurrencyConverter.Model
 {
+    /// <summary>
+    /// Валюта
+    /// </summary>
     public class Currency
     {
         public string Name { get; set; }
@@ -25,7 +28,6 @@ namespace CurrencyConverter.Model
         SortedDictionary<string, Currency> Valute { get;}
         IEnumerable<string> GetCurrenciesNames();
         IEnumerable<Currency> GetCurrencies();
-        (Currency, Currency) GetInitPair();
     }
 
     abstract class FinanceSource

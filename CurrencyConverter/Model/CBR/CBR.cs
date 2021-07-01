@@ -20,16 +20,14 @@ namespace CurrencyConverter.Model.CBR
             var response = BurseRequest.getStockQuotes(Url);
             if (response.ResponseCode == HttpStatusCode.OK)
                 return CBRXmlDailyResponse.LoadFromText(response.ResponseString);
-            
-            return null;
+
+            throw new WebException();
         }
 
         public static FinanceSource GetInstance()
         {
             if (instance == null)
-            {
                 instance = new CBRFinanceSource();
-            }
             return instance;
         }
     }
@@ -42,11 +40,15 @@ namespace CurrencyConverter.Model.CBR
         public CBRXmlDailyResponse()
         {
             Valute = new SortedDictionary<string, Currency>();
-            Currency rub = new Currency();
-            rub.Value = 1;
-            rub.CharCode = "RUB";
-            rub.Nominal = 1;
-            rub.Name = "Российский рубль";
+            // задаем рубль отдельно, т.к. нет в списке
+            Currency rub = new Currency()
+            {
+                Value = 1,
+                CharCode = "RUB",
+                Nominal = 1,
+                Name = "Российский рубль"
+            };
+     
             Valute.Add("RUB", rub);
         }
         public SortedDictionary<string, Currency> Valute { get; set; }
@@ -56,9 +58,6 @@ namespace CurrencyConverter.Model.CBR
 
         public static CBRXmlDailyResponse LoadFromText(string response) => JsonConvert.DeserializeObject<CBRXmlDailyResponse>(response);
 
-        public (Currency, Currency) GetInitPair()
-        {
-            return (Valute["RUB"], Valute["USD"]);
-        }
+  
     }
 }

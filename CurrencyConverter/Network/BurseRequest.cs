@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace CurrencyConverter.Network
 {
+    /// <summary>
+    /// Запрос на биржу
+    /// </summary>
     class BurseRequest
     {
         public static (string ResponseString, HttpStatusCode ResponseCode) getStockQuotes(string url)

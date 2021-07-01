@@ -21,12 +21,12 @@ using System.Threading;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using System.Net;
-// Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
+
 
 namespace CurrencyConverter
 {
     /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
+    /// Главная страница
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -38,17 +38,18 @@ namespace CurrencyConverter
         public MainPage()
         {
             this.InitializeComponent();
+            // получить инстанс ресурса данных
             source = CBRFinanceSource.GetInstance();
+            // включить кеширование страниц
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            // перевести в режим обновления
             Update();
-            Task.Factory.StartNew(TaskMethod);
             
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             Update();
-            Task.Factory.StartNew(TaskMethod);
         }
 
         private void updateDateTextBox(IFinanceExchange r)
@@ -61,6 +62,8 @@ namespace CurrencyConverter
             converter.Visibility = Visibility.Collapsed;
             CommadBar.Visibility = Visibility.Collapsed;
             Datepanel.Visibility = Visibility.Collapsed;
+            // запуск параллельной задачи
+            Task.Factory.StartNew(TaskMethod);
         }
         private void Updated()
         {
@@ -73,11 +76,15 @@ namespace CurrencyConverter
         {
             try
             {
+                // получить результаты запроса
                 var r = source.DoRequestWintHandle();
-                Thread.Sleep(2000);
+                // Искуственная задержка для демострации спинера
+                Thread.Sleep(1000);
+                // запустить в потоке UI
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
                     LoadingIndicator.Visibility = Visibility.Collapsed;
                     updateDateTextBox(r);
+                    // задать параметры для контрола ковертора
                     converter.SetParams(r);
                     Updated();
                 });
