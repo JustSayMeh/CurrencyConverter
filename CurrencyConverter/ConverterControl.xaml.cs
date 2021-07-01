@@ -60,10 +60,8 @@ namespace CurrencyConverter
         private char culture_separator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator.ToCharArray()[0];
         private IFinanceExchange financeExchange;
         private Converter converterCalculator = null;
-        public ConverterControl()
-        {
-            this.InitializeComponent();
-        }
+        public ConverterControl() => this.InitializeComponent();
+        
 
         private void Value_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
         {
@@ -84,15 +82,10 @@ namespace CurrencyConverter
                 });
         }
 
-        private void ValueA_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            Value_TextChanged(ValueA, ValueB);
-        }
-        private void ValueB_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Value_TextChanged(ValueB, ValueA);
-        }
+        private void ValueA_TextChanged(object sender, TextChangedEventArgs e) => Value_TextChanged(ValueA, ValueB);
+        
+        private void ValueB_TextChanged(object sender, TextChangedEventArgs e) => Value_TextChanged(ValueB, ValueA);
+        
 
         private void Value_TextChanged(TextBox A, TextBox B)
         {

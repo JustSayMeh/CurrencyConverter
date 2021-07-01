@@ -47,15 +47,13 @@ namespace CurrencyConverter
             
         }
 
-        private void Update_Click(object sender, RoutedEventArgs e)
-        {
-            Update();
-        }
+        private void Update_Click(object sender, RoutedEventArgs e) => Update();
+        
 
-        private void updateDateTextBox(IFinanceExchange r)
-        {
-            dateofupdate.Text = $"{data_for_currenttime_string} {r.Date}";
-        }
+        private void updateDateTextBox(IFinanceExchange r) => dateofupdate.Text = $"{data_for_currenttime_string} {r.Date}";
+
+
+
         private void  Update()
         {
             LoadingIndicator.Visibility = Visibility.Visible;

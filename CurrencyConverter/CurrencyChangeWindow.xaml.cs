@@ -27,10 +27,8 @@ namespace CurrencyConverter
         private Action<(string A, string B)> action;
         private string A, B;
         private SortedDictionary<string, Currency> dictionary;
-        public CurrencyChangeWindow()
-        {
-            this.InitializeComponent();
-        }
+        public CurrencyChangeWindow() => this.InitializeComponent();
+        
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // Получить параметры, переданные из главной страницы
@@ -68,7 +66,6 @@ namespace CurrencyConverter
         }
 
         private void Button_Back(object sender, RoutedEventArgs e) => Frame.GoBack();
-
 
         private void TextBoxA_KeyUp(object sender, KeyRoutedEventArgs e) => TextBox_KeyUp(TextBoxA, listA);
 
