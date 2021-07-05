@@ -12,7 +12,7 @@ namespace CurrencyConverter.Model.CBR
 {
     class CBRFinanceSource : FinanceSource
     {
-        private static FinanceSource instance = null;
+        private static Lazy<CBRFinanceSource> instance = new Lazy<CBRFinanceSource>(() => new CBRFinanceSource());
         protected CBRFinanceSource() : base("CBR", "https://www.cbr-xml-daily.ru/daily_json.js") { }
 
         public async override Task<IFinanceExchange> DoRequestWintHandle()
@@ -24,12 +24,7 @@ namespace CurrencyConverter.Model.CBR
             throw new WebException();
         }
 
-        public static FinanceSource GetInstance()
-        {
-            if (instance == null)
-                instance = new CBRFinanceSource();
-            return instance;
-        }
+        public static FinanceSource GetInstance() => instance.Value;
     }
     class CBRXmlDailyResponse : IFinanceExchange
     {

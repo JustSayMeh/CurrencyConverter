@@ -44,6 +44,7 @@ namespace CurrencyConverter
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             // перевести в режим обновления
             Update();
+            return;
             
         }
 
@@ -61,6 +62,7 @@ namespace CurrencyConverter
             CommadBar.Visibility = Visibility.Collapsed;
             Datepanel.Visibility = Visibility.Collapsed;
             // запуск параллельной задачи
+           
             TaskMethod();
            
         }
@@ -70,11 +72,13 @@ namespace CurrencyConverter
             converter.Visibility = Visibility.Visible;
             CommadBar.Visibility = Visibility.Visible;
             Datepanel.Visibility = Visibility.Visible;
+            //Thread.Sleep(2000);
         }
         private async void TaskMethod()
         {
             try
             {
+          
                 // получить результаты запроса
                 var r = await source.DoRequestWintHandle();
                 // Искуственная задержка для демострации спинера
@@ -97,8 +101,6 @@ namespace CurrencyConverter
                 CoreApplication.Exit();
          
             }
-           
-
         }
     }
 }
