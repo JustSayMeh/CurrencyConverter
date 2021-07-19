@@ -38,68 +38,68 @@ namespace CurrencyConverter
         public MainPage()
         {
             this.InitializeComponent();
-            // получить инстанс ресурса данных
             source = CBRFinanceSource.GetInstance();
             // включить кеширование страниц
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            // перевести в режим обновления
-            Update();
+            UpdateQuotes();
             return;
             
         }
 
-        private void Update_Click(object sender, RoutedEventArgs e) => Update();
-        
-
+        private void Update_Click(object sender, RoutedEventArgs e) => UpdateQuotes();
         private void updateDateTextBox(IFinanceExchange r) => dateofupdate.Text = $"{data_for_currenttime_string} {r.Date}";
 
-
-
-        private void  Update()
+        private void toLoadingState()
         {
             LoadingIndicator.Visibility = Visibility.Visible;
             converter.Visibility = Visibility.Collapsed;
             CommadBar.Visibility = Visibility.Collapsed;
             Datepanel.Visibility = Visibility.Collapsed;
-            // запуск параллельной задачи
-           
-            TaskMethod();
-           
         }
-        private void Updated()
+        
+        private void toWorkState()
         {
             LoadingIndicator.Visibility = Visibility.Collapsed;
             converter.Visibility = Visibility.Visible;
             CommadBar.Visibility = Visibility.Visible;
             Datepanel.Visibility = Visibility.Visible;
-            //Thread.Sleep(2000);
         }
+
+        private void  UpdateQuotes()
+        {
+            toLoadingState();
+            TaskMethod();
+        }
+
+        private async Task LoadQuotesAndShowIt()
+        {
+            var quotes = await source.DoRequestWintHandle();
+            updateDateTextBox(quotes);
+            converter.SetParams(quotes);
+            toWorkState();
+        }
+
+        private async Task ProvideErrorContentDialogAndExit()
+        {
+            ContentDialog contentDialog = new ContentDialog
+            {
+                Title = error_string,
+                Content = net_error_string,
+                PrimaryButtonText = ok_string,
+            };
+            await contentDialog.ShowAsync();
+            CoreApplication.Exit();
+        }
+
         private async void TaskMethod()
         {
             try
             {
-          
-                // получить результаты запроса
-                var r = await source.DoRequestWintHandle();
-                // Искуственная задержка для демострации спинера
-                await Task.Delay(1000);
-                LoadingIndicator.Visibility = Visibility.Collapsed;
-                updateDateTextBox(r);
-                // задать параметры для контрола ковертора
-                converter.SetParams(r);
-                Updated();
-                
-            }catch (WebException e)
+                await LoadQuotesAndShowIt();
+            }
+            catch (WebException e)
             {
-                ContentDialog contentDialog = new ContentDialog
-                {
-                    Title = error_string,
-                    Content = net_error_string,
-                    PrimaryButtonText = ok_string,
-                };
-                await contentDialog.ShowAsync();
-                CoreApplication.Exit();
-         
+                await ProvideErrorContentDialogAndExit();
             }
         }
     }

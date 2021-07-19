@@ -33,26 +33,11 @@ namespace CurrencyConverter
             this.B = B;
             coef = (A.Value / A.Nominal) / (B.Value / B.Nominal);
         }
-        public decimal AtoB(decimal v)
-        {
-            return v * coef;
-        }
-        public decimal BtoA(decimal v)
-        {
-            return v / coef;
-        }
-        public void swap()
-        {
-            SetCoef(B, A);
-        }
-        public string BtoAString(decimal v)
-        {
-            return BtoA(v).ToString("F5");
-        }
-        public string AtoBString(decimal v)
-        {
-            return AtoB(v).ToString("F5");
-        }
+        public decimal AtoB(decimal v) => v * coef;
+        public decimal BtoA(decimal v) => v / coef;
+        public void swap() => SetCoef(B, A);
+        public string BtoAString(decimal v) => BtoA(v).ToString("F5");
+        public string AtoBString(decimal v) => AtoB(v).ToString("F5");
     }
     public sealed partial class ConverterControl : UserControl
     {
@@ -61,58 +46,51 @@ namespace CurrencyConverter
         private IFinanceExchange financeExchange;
         private Converter converterCalculator = null;
         public ConverterControl() => this.InitializeComponent();
-        
 
-        private void Value_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        private bool IsProgramTextChanging(TextBox sender) => sender.FocusState == FocusState.Unfocused;
+        private void ValueA_TextChanged(object sender, TextChangedEventArgs e) => Value_TextChanged(ValueA, ValueB);
+        private void ValueB_TextChanged(object sender, TextChangedEventArgs e) => Value_TextChanged(ValueB, ValueA);
+
+        private void ValidateTextBoxInput(TextBoxBeforeTextChangingEventArgs args)
         {
-            // фильтрация цифр 
-            bool flag = true;
-            // скипнуть обработку, если изменения были програмными
-            if (((TextBox)sender).FocusState == FocusState.Unfocused)
-                return;
+            bool delimeter_exist_flag = true;
             if (args.NewText.Length > 10)
                 args.Cancel = true;
             else
-                args.Cancel = args.NewText.Any(c =>
+                args.Cancel = args.NewText.Any(current_char =>
                 {
-                    bool ret = !char.IsDigit(c) && (c != culture_separator || !flag);
-                    if (c == culture_separator && flag)
-                        flag = false;
-                    return ret;
+                    bool skip_flag = !char.IsDigit(current_char) && (current_char != culture_separator || !delimeter_exist_flag);
+                    if (current_char == culture_separator && delimeter_exist_flag)
+                        delimeter_exist_flag = false;
+                    return skip_flag;
                 });
         }
 
-        private void ValueA_TextChanged(object sender, TextChangedEventArgs e) => Value_TextChanged(ValueA, ValueB);
-        
-        private void ValueB_TextChanged(object sender, TextChangedEventArgs e) => Value_TextChanged(ValueB, ValueA);
-        
+        private void Value_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            if (IsProgramTextChanging(sender))
+                return;
+            ValidateTextBoxInput(args);
+        }
+
+        private void SetNewValueFromA2B(TextBox A, TextBox B)
+        {
+            decimal newvalue = 0;
+            if (A.Text.Length > 0)
+                newvalue = decimal.Parse(A.Text);
+
+            B.Text = converterCalculator.AtoBString(newvalue);
+        }
 
         private void Value_TextChanged(TextBox A, TextBox B)
         {
-            // скипнуть обработку, если изменения были програмными
-            if (A.FocusState == FocusState.Unfocused)
+            if (IsProgramTextChanging(A))
                 return;
-            decimal newvalue = 0;
-            if (A.Text.Length > 0)
-                //try
-                //{
-                    newvalue = decimal.Parse(A.Text);
-                //}
-                //catch (OverflowException exp)
-                //{
-                //    A.Text = "1";
-                //    newvalue = 1;
-                //}
-            B.Text = converterCalculator.AtoBString(newvalue);
+            SetNewValueFromA2B(A, B);
         }
-        /// <summary>
-        /// Задать параметры конвертора через объект IFinanceExchange
-        /// </summary>
-        /// <param name="financeExchange"></param>
-        public void SetParams(IFinanceExchange financeExchange)
+
+        private void InitConverterCalculator()
         {
-            this.financeExchange = financeExchange;
-            // Если ковертор не задан, то задать его
             if (converterCalculator != null)
             {
                 converterCalculator = new Converter(financeExchange.Valute[converterCalculator.A.CharCode], financeExchange.Valute[converterCalculator.B.CharCode]);
@@ -125,6 +103,20 @@ namespace CurrencyConverter
                 ValuteA.Text = "---";
                 ValuteB.Text = "---";
             }
+        }
+        private void SetValutesTextBoxesText()
+        {
+            ValuteA.Text = converterCalculator.A.CharCode;
+            ValuteB.Text = converterCalculator.B.CharCode;
+        }
+        /// <summary>
+        /// Задать параметры конвертора через объект IFinanceExchange
+        /// </summary>
+        /// <param name="financeExchange"></param>
+        public void SetParams(IFinanceExchange financeExchange)
+        {
+            this.financeExchange = financeExchange;
+            InitConverterCalculator();
         }
 
 
@@ -159,15 +151,14 @@ namespace CurrencyConverter
                 return;
             converterCalculator.swap();
             setTextBoxtext();
-
         }
+
         /// <summary>
         /// Задать значения TextBlock и TextBox
         /// </summary>
         private void setTextBoxtext()
         {
-            ValuteA.Text = converterCalculator.A.CharCode;
-            ValuteB.Text = converterCalculator.B.CharCode;
+            SetValutesTextBoxesText();
             if (ValueA.Text.Length > 0)
                 ValueB.Text = converterCalculator.AtoBString(decimal.Parse(ValueA.Text)).ToString();
             information_textblock.Text = $"1 {converterCalculator.A.CharCode} = {converterCalculator.AtoBString(1)} {converterCalculator.B.CharCode}";
