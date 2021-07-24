@@ -24,12 +24,13 @@ namespace CurrencyConverter
     /// </summary>
     public sealed partial class CurrencyChangeWindow : Page
     {
-        private Action<(string A, string B)> action;
+        private Action<(string A, string B)> Ok_action;
+        private Action<string> Back_action;
         private string A, B;
         private SortedDictionary<string, Currency> dictionary;
         public CurrencyChangeWindow() => this.InitializeComponent();
 
-        private void Button_Back(object sender, RoutedEventArgs e) => Frame.GoBack();
+        private void Button_Back(object sender, RoutedEventArgs e) => Back_action.Invoke("");
 
         private void TextBoxA_KeyUp(object sender, KeyRoutedEventArgs e) => TextBox_KeyUp(TextBoxA, listA);
 
@@ -45,7 +46,7 @@ namespace CurrencyConverter
             listB.ItemsSource = dictionary;
         }
         
-        private void SetValutesNames((SortedDictionary<string, Currency>, Action<(string A, string B)>, string, string) bind )
+        private void SetValutesNames((SortedDictionary<string, Currency>, Action<(string A, string B)>, string, string, Action<string>) bind )
         {
             A = bind.Item3;
             B = bind.Item4;
@@ -75,10 +76,10 @@ namespace CurrencyConverter
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // Получить параметры, переданные из главной страницы
-            var page_arguments = ((SortedDictionary<string, Currency>, Action<(string A, string B)>, string, string))e.Parameter;
+            var page_arguments = ((SortedDictionary<string, Currency>, Action<(string A, string B)>, string, string, Action<string>))e.Parameter;
             dictionary = page_arguments.Item1;
-            action = page_arguments.Item2;
-
+            Ok_action = page_arguments.Item2;
+            Back_action = page_arguments.Item5;
             SetListResources();
             SetValutesNames(page_arguments);
             if (IsValutesNamesEmpty())
@@ -95,11 +96,8 @@ namespace CurrencyConverter
                 return (KeyValuePair<string, Currency>)list.SelectedItem;
             return default(KeyValuePair<string, Currency>);
         }
-        private void Button_Ok(object sender, RoutedEventArgs e)
-        {
-            action.Invoke((getSelectedItem(listA).Key, getSelectedItem(listB).Key));
-            Frame.GoBack();
-        }
+        private void Button_Ok(object sender, RoutedEventArgs e) => Ok_action.Invoke((getSelectedItem(listA).Key, getSelectedItem(listB).Key)); 
+        
 
         private void list_SelectionChanged(ListBox list, TextBlock text)
         {

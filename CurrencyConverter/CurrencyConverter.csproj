@@ -119,8 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ConverterControl.xaml.cs">
+    <Compile Include="Components\ConverterControl.xaml.cs">
       <DependentUpon>ConverterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\PopupPage.xaml.cs">
+      <DependentUpon>PopupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CurrencyChangeWindow.xaml.cs">
       <DependentUpon>CurrencyChangeWindow.xaml</DependentUpon>
@@ -200,7 +203,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ConverterControl.xaml">
+    <Page Include="Components\ConverterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\PopupPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

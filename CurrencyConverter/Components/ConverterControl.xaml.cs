@@ -1,4 +1,5 @@
-﻿using CurrencyConverter.Model;
+﻿using CurrencyConverter.Components;
+using CurrencyConverter.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,6 +42,7 @@ namespace CurrencyConverter
     }
     public sealed partial class ConverterControl : UserControl
     {
+        private PopupPage popup_page;
         private string change_valutes_string = (string)Application.Current.Resources["change_valutes_string"];
         private char culture_separator = CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator.ToCharArray()[0];
         private IFinanceExchange financeExchange;
@@ -113,9 +115,10 @@ namespace CurrencyConverter
         /// Задать параметры конвертора через объект IFinanceExchange
         /// </summary>
         /// <param name="financeExchange"></param>
-        public void SetParams(IFinanceExchange financeExchange)
+        public void SetParams(IFinanceExchange financeExchange, PopupPage popup_page)
         {
             this.financeExchange = financeExchange;
+            this.popup_page = popup_page;
             InitConverterCalculator();
         }
 
@@ -123,22 +126,27 @@ namespace CurrencyConverter
         private void ChangeButton_Click(object sender, RoutedEventArgs e)
         {
             // Вызов страницы изменения валют
-            Frame rootFrame = Window.Current.Content as Frame;
+            //Frame rootFrame = Window.Current.Content as Frame;
             // делегат обратного вызова, чтобы изменить параметры конвертора
-            Action<(string A,  string B)> _backAction = new Action<(string A, string B)>((para) =>
+            Action<(string A, string B)> _backAction = new Action<(string A, string B)>((para) =>
             {
-                Currency A = financeExchange.Valute[para.A];
-                Currency B = financeExchange.Valute[para.B];
-                converterCalculator = new Converter(A, B);
-                ValueA.IsEnabled = true;
-                ValueB.IsEnabled = true;  
-                button.Content = change_valutes_string;
-                setTextBoxtext(); 
+               Currency A = financeExchange.Valute[para.A];
+               Currency B = financeExchange.Valute[para.B];
+               converterCalculator = new Converter(A, B);
+               ValueA.IsEnabled = true;
+               ValueB.IsEnabled = true;
+               button.Content = change_valutes_string;
+               setTextBoxtext();
+               popup_page.SetHide();
             });
+            Action<string> back_action = new Action<string>(
+                (p) => popup_page.SetHide());
+     
             if (converterCalculator != null)
-                rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode));
+                popup_page.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, converterCalculator.A.CharCode, converterCalculator.B.CharCode, back_action));
             else
-                rootFrame.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, "", ""));
+                popup_page.Navigate(typeof(CurrencyChangeWindow), (financeExchange.Valute, _backAction, "", "", back_action));
+            popup_page.SetVisible();
         }
         /// <summary>
         /// Свапнуть валюты

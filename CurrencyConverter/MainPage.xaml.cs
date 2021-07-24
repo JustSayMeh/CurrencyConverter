@@ -75,7 +75,7 @@ namespace CurrencyConverter
         {
             var quotes = await source.DoRequestWintHandle();
             updateDateTextBox(quotes);
-            converter.SetParams(quotes);
+            converter.SetParams(quotes, popupframe);
             toWorkState();
         }
 

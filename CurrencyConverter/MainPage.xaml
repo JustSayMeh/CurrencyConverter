@@ -4,7 +4,7 @@
     xmlns:local="using:CurrencyConverter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:Custom="using:Microsoft.UI.Xaml.Controls"
+    xmlns:Custom="using:Microsoft.UI.Xaml.Controls" xmlns:components="using:CurrencyConverter.Components"
     x:Class="CurrencyConverter.MainPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -13,70 +13,30 @@
             <AppBarButton Icon="RepeatAll" Label="Repeat" Click="Update_Click" />
         </CommandBar>
     </Page.TopAppBar>
-    <Grid Background="AliceBlue">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-     
             <ColumnDefinition></ColumnDefinition>
-
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Goldenrod" Padding="10, 5, 10, 5" x:Name="Datepanel" Grid.Column="0" Grid.Row="0">
-            <TextBlock x:Name="dateofupdate"/>
-        </StackPanel>
-        <local:ConverterControl x:Name="converter" Margin="0, 50, 0, 0" Grid.Column="0" Grid.Row="1"/>
-        <ProgressRing x:Name="LoadingIndicator" IsActive="True" Width="150" Height="150" Grid.Column="0" Grid.Row="1"/>
-        <!--<StackPanel RelativePanel.AlignRightWithPanel="True">
-            <StackPanel Orientation="Horizontal">
-                <RadioButton></RadioButton>
-                <RadioButton></RadioButton>
-                <RadioButton></RadioButton>
+        <Grid Background="AliceBlue" Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+     
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Goldenrod" Padding="10, 5, 10, 5" x:Name="Datepanel" Grid.Column="0" Grid.Row="0">
+                <TextBlock x:Name="dateofupdate"/>
             </StackPanel>
-            <controls:DataGrid Name="Table" HeadersVisibility="Column"  CanUserSortColumns="False" 
-                      CanUserResizeColumns="False" AutoGenerateColumns="False" 
-                      CanUserReorderColumns="False"  Width="auto" >
-
-
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTemplateColumn Header="Name">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox BorderThickness="0" IsReadOnly="True" 
-                                         Text="{Binding Path= Value.Name}"  />
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                    <controls:DataGridTemplateColumn Header="CharCode">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox BorderThickness="0" IsReadOnly="True" 
-                                         Text="{Binding Path= Value.CharCode}"  />
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                    <controls:DataGridTemplateColumn Header="NumCode">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox BorderThickness="0" IsReadOnly="True" 
-                                         Text="{Binding Path= Value.NumCode}"  />
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                    <controls:DataGridTemplateColumn Header="Value">
-                        <controls:DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBox BorderThickness="0" IsReadOnly="True" 
-                                         Text="{Binding Path= Value.Value}"  />
-                            </DataTemplate>
-                        </controls:DataGridTemplateColumn.CellTemplate>
-                    </controls:DataGridTemplateColumn>
-                </controls:DataGrid.Columns>
-
-
-            </controls:DataGrid>
-        </StackPanel>-->
-
+            <local:ConverterControl x:Name="converter" Margin="0, 50, 0, 0" Grid.Column="0" Grid.Row="1"/>
+            <ProgressRing x:Name="LoadingIndicator" IsActive="True" Width="150" Height="150" Grid.Column="0" Grid.Row="1"/>
+        </Grid>
+        <components:PopupPage x:Name="popupframe"/>
     </Grid>
+
 </Page>

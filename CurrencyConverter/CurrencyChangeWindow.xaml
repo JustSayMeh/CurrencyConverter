@@ -29,14 +29,7 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <StackPanel Orientation="Horizontal" Margin="0,0,30,0">
-            <Button x:Name="BackButton"
-                Click="Button_Back"
-                Style="{StaticResource NavigationBackButtonNormalStyle}"
-                IsEnabled="{x:Bind Frame.CanGoBack, Mode=OneWay}" 
-                ToolTipService.ToolTip="Back"/>
-            <TextBlock FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Text="{StaticResource to_convertor_string}"/> 
-        </StackPanel>
+   
         <TextBlock FontSize="20" FontWeight="Bold" HorizontalTextAlignment="Center" Margin="0,0,30,0" Text="{StaticResource set_valute_string}"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Padding="0, 10, 0, 0">
