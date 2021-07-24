@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="banner.xaml.cs">
+      <DependentUpon>banner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConverterControl.xaml.cs">
       <DependentUpon>ConverterControl.xaml</DependentUpon>
     </Compile>
@@ -132,6 +135,9 @@
     <Compile Include="Model\ResponseParser.cs" />
     <Compile Include="Model\ResultHandler.cs" />
     <Compile Include="Network\BurseRequest.cs" />
+    <Compile Include="PopupBannerPage.xaml.cs">
+      <DependentUpon>PopupBannerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,7 +191,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="images\transfer.svg" />
+    <Content Include="images\00.jpg" />
     <Content Include="images\transfer.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -200,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="banner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ConverterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -211,6 +221,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopupBannerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="resources\ButtonStyle.xaml">
       <SubType>Designer</SubType>

@@ -42,6 +42,8 @@ namespace CurrencyConverter
             // включить кеширование страниц
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
             UpdateQuotes();
+            TappedEventHandler eventHandler = (object sender, TappedRoutedEventArgs e) => popupBanner.Visibility = Visibility.Collapsed;
+            popupBanner.Navigate(typeof(PopupBannerPage), (eventHandler, typeof(BlankPage1)));
             return;
             
         }

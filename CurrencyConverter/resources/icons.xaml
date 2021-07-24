@@ -2,4 +2,5 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <BitmapImage x:Key="transfer_icon" UriSource="images\transfer.png"/>
+    <BitmapImage x:Key="background_icon" UriSource="images\00.jpg"/>
 </ResourceDictionary>
